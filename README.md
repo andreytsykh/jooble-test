@@ -1,4 +1,4 @@
-jooble-test is a simple Python module to normalizing vacancy data using A-score normalization
+jooble-test is a simple Python module to standardizing vacancy data using Z-score normalization
 
 In script also implemented two strategy for preprocessing train data:
 
@@ -9,12 +9,12 @@ jooble-test requires:
 
 python >= 3.7.0
 
-Click==7.0
-numpy==1.17.0
-pandas==0.25.0
-python-dateutil==2.8.0
-pytz==2019.2
-six==1.12.0
+-Click==7.0
+-numpy==1.17.0
+-pandas==0.25.0
+-python-dateutil==2.8.0
+-pytz==2019.2
+-six==1.12.0
 
 
 
