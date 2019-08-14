@@ -52,10 +52,10 @@ class StatisticsComputingStartegy(metaclass=abc.ABCMeta):
         pass
 
 class InMemoryStrategy(StatisticsComputingStartegy):
-    def __init__(self):
+    def __init__(self, train_file):
         self.mean_dict = {}
         self.std_dict = {}
-        self.train_file = INPUT_TRAIN_FILE
+        self.train_file = train_file
     
     def get_statistics(self):
         tsv_stream = self._TsvToCsvStreamer(self.train_file)
@@ -86,8 +86,8 @@ class InMemoryStrategy(StatisticsComputingStartegy):
                     yield csv_line + '\n'
                         
 class StreamingStrategy(StatisticsComputingStartegy):
-    def __init__(self):
-        self.file = INPUT_TRAIN_FILE
+    def __init__(self, train_file):
+        self.file = train_file
         self.std_dict = collections.defaultdict(float)
         self.mean_dict = collections.defaultdict(float)
         self.code_to_q = collections.defaultdict(int)
@@ -131,10 +131,10 @@ class TrainDataPreprocessor:
 
         if file_size  < self.in_memory_limit:
             logging.debug('CHOOSE IN-MEMORY STRATEGY')
-            return InMemoryStrategy()
+            return InMemoryStrategy(self.train_file)
         else:
             logging.debug('CHOOSE STREAMING STRATEGY')
-            return StreamingStrategy()
+            return StreamingStrategy(self.train_file)
 
     def get_statistics(self):
         strategy = self.choose_computing_strategy()
